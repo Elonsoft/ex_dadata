@@ -11,6 +11,16 @@ defmodule ExDadata.Address do
 
   @clean_address_url "https://cleaner.dadata.ru/api/v1/clean/address"
 
+  @doc """
+  Normalize the address.
+
+  See [documentation](https://dadata.ru/api/clean/address/#restrictions)
+  for more information.
+
+  ## Example
+
+      ExDadata.Address.clean_address(client, ["мск сухонска 11/-89"])
+  """
   def clean_address(client, data) do
     with {:ok, body} <- do_clean_address(client, data) do
       {:ok, CleanAddress.new!(body)}
@@ -30,6 +40,17 @@ defmodule ExDadata.Address do
 
   @suggest_address_url "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address"
 
+  @doc """
+  Search address by any part of an address from the region to the
+  house. Also, you can search by zip-code.
+
+  See [documentation](https://dadata.ru/api/suggest/address/) for more
+  info.
+
+  ## Example
+
+      ExDadata.Address.suggest_address(client, %{query: "москва хабар"})
+  """
   def suggest_address(client, data) do
     with {:ok, body} <- do_suggest_address(client, data) do
       {:ok, SuggestAddress.new!(body)}
