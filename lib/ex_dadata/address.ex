@@ -5,7 +5,7 @@ defmodule ExDadata.Address do
   For more information see [docs](https://dadata.ru/api/#address-clean).
   """
 
-  alias __MODULE__.{CleanAddress, SuggestAddress, GeocodeAddress}
+  alias __MODULE__.{CleanAddress, SuggestAddress, GeocodeAddress, GeolocateAddress}
   alias ExDadata.Client
   alias ExDadata.HTTPAdapter.Response
 
@@ -97,6 +97,41 @@ defmodule ExDadata.Address do
     adapter = Client.adapter(client)
 
     case adapter.request(:post, @geocode_address_url, headers, data, []) do
+      {:ok, %Response{status: 200, body: response}} -> {:ok, response}
+      {:ok, resp} -> {:error, resp}
+      {:error, _} = error -> error
+    end
+  end
+
+  @geolocate_address_url "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address"
+
+  @doc """
+  Search addresses which are close to coordinates.
+
+  See [documentation](https://dadata.ru/api/geolocate/) for more
+  info.
+
+  ## Example
+
+      ExDadata.Address.geolocate_address(client, %{lat: 55.601983, lon: 37.359486})
+  """
+  def geolocate_address(client, data) do
+    with {:ok, body} <- do_geolocate_address(client, data) do
+      {:ok, GeolocateAddress.new!(body)}
+    end
+  end
+
+  defp do_geolocate_address(client, data) do
+    headers =
+      Client.to_headers(client) ++
+        [
+          {"Accept", "application/json"},
+          {"Content-Type", "application/json"}
+        ]
+
+    adapter = Client.adapter(client)
+
+    case adapter.request(:get, @geolocate_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
