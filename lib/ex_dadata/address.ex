@@ -5,7 +5,7 @@ defmodule ExDadata.Address do
   For more information see [docs](https://dadata.ru/api/#address-clean).
   """
 
-  alias __MODULE__.{CleanAddress, SuggestAddress}
+  alias __MODULE__.{CleanAddress, SuggestAddress, GeocodeAddress}
   alias ExDadata.Client
   alias ExDadata.HTTPAdapter.Response
 
@@ -68,6 +68,35 @@ defmodule ExDadata.Address do
     adapter = Client.adapter(client)
 
     case adapter.request(:post, @suggest_address_url, headers, data, []) do
+      {:ok, %Response{status: 200, body: response}} -> {:ok, response}
+      {:ok, resp} -> {:error, resp}
+      {:error, _} = error -> error
+    end
+  end
+
+  @geocode_address_url "https://cleaner.dadata.ru/api/v1/clean/address"
+
+  @doc """
+  Determine coordinates the address.
+
+  See [documentation](https://dadata.ru/api/geocode/)
+  for more information.
+
+  ## Example
+
+      ExDadata.Address.geocode_address(client, ["мск сухонска 11/-89"])
+  """
+  def geocode_address(client, data) do
+    with {:ok, body} <- do_geocode_address(client, data) do
+      {:ok, GeocodeAddress.new!(body)}
+    end
+  end
+
+  defp do_geocode_address(client, data) do
+    headers = Client.to_headers(client)
+    adapter = Client.adapter(client)
+
+    case adapter.request(:post, @geocode_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
