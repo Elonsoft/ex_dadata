@@ -3,6 +3,8 @@ defmodule ExDadata.Client do
   Keeps authorization information for DaData.
   """
 
+  alias ExDadata.HTTPBackoff
+
   defstruct ~w(api_key secret_key adapter)a
 
   @opaque t :: %__MODULE__{}
@@ -12,7 +14,8 @@ defmodule ExDadata.Client do
   """
   @spec new(String.t(), String.t(), module) :: t
   def new(api_key, secret_key, adapter) do
-    %__MODULE__{api_key: api_key, secret_key: secret_key, adapter: adapter}
+    backoffed_adapter = HTTPBackoff.functor(adapter)
+    %__MODULE__{api_key: api_key, secret_key: secret_key, adapter: backoffed_adapter}
   end
 
   @doc false
