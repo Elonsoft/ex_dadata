@@ -35,7 +35,13 @@ defmodule ExDadata.MixProject do
   defp docs do
     [
       main: "ExDadata",
-      extras: ["README.md"]
+      extras: ["README.md"],
+      groups_for_modules: [
+        Internals: [
+          ExDadata.HTTPAdapter,
+          ExDadata.HTTPAdapter.Response
+        ]
+      ]
     ]
   end
 end
