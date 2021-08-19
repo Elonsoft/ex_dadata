@@ -77,7 +77,7 @@ defmodule ExDadata.Address do
   @geocode_address_url "https://cleaner.dadata.ru/api/v1/clean/address"
 
   @doc """
-  Determine coordinates the address.
+  Determine coordinates for the address.
 
   See [documentation](https://dadata.ru/api/geocode/)
   for more information.
@@ -106,7 +106,7 @@ defmodule ExDadata.Address do
   @geolocate_address_url "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address"
 
   @doc """
-  Search addresses which are close to coordinates.
+  Search addresses which are close to the coordinates.
 
   See [documentation](https://dadata.ru/api/geolocate/) for more
   info.

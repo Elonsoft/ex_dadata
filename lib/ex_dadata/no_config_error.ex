@@ -1,6 +1,6 @@
 defmodule ExDadata.NoConfigError do
   @moduledoc """
-  An error raised in case you did not provided required config key.
+  An error raised in case you did not provide a required config key.
   """
 
   defexception [:key, :otp_app, :module]

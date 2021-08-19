@@ -11,8 +11,9 @@ defmodule ExDadata.HTTPAdapter do
   @typedoc """
   Full url for the request.
 
-  Note: You'll need to compose a proper full url with query params and
-  everything else.
+  Note: It's a proper full url with query params and everything else.
+  In case your http-client library doesn't allow you to contain such
+  strings in your url, you need to decompose it.
   """
   @type url :: String.t()
 
@@ -22,7 +23,7 @@ defmodule ExDadata.HTTPAdapter do
   @type header :: {String.t(), String.t()}
 
   @typedoc """
-  JSON-body for the request. Provided as a map. May contain atoms.
+  JSON-body for the request, provided as a map; may contain atoms.
   """
   @type body :: map
 
