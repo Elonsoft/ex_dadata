@@ -1,11 +1,10 @@
 # ExDadata
 
-**TODO: Add description**
+`ExDadata` provides a wrapper for [DaData API](https://dadata.ru/api/).
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_dadata` to your list of dependencies in `mix.exs`:
+Add the package to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +14,30 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_dadata](https://hexdocs.pm/ex_dadata).
+Documentation is available on [HexDocs](https://hexdocs.pm/ex_dadata).
 
+## Usage
+
+Firs we need to define a configuration module.
+
+```elixir
+defmodule MyApp.Dadata do
+  use ExDadata, otp_app: :my_app
+end
+```
+
+Then we can set our configuration in `config.exs` file:
+
+```elixir
+config :my_app, MyApp.Dadata,
+  api_key: "<api_key>",
+  secret_key: "<secret_key>",
+  adapter: ExDadata.HTTPoison
+```
+
+And then we can use it to make requests to DaData API:
+
+```elixir
+client = MyApp.Dadata.client()
+{:ok, result} = ExDadata.Address.clean_address(client, ["мск сухонска 11/-89"])
+```
