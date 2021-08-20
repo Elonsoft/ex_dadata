@@ -9,7 +9,7 @@ defmodule ExDadata.Address.SuggestAddress.Suggestion.Data.Metro do
   embedded_schema do
     field :name, :string
     field :line, :string
-    field :distance, :integer
+    field :distance, :decimal
   end
 
   @fields ~w(name line distance)a

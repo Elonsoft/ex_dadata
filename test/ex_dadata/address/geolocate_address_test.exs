@@ -200,9 +200,9 @@ defmodule ExDadata.Address.GeolocateAddressTest do
             "data" => %{
               "metro" => [
                 %{
-                  "name" => "Название станции",
-                  "line" => "Название линии",
-                  "distance" => 6
+                  "distance" => 1.1,
+                  "line" => "Калужско-Рижская",
+                  "name" => "Бабушкинская"
                 }
               ]
             }
@@ -213,9 +213,9 @@ defmodule ExDadata.Address.GeolocateAddressTest do
       assert %{suggestions: [%{data: %{metro: [metro]}}]} = GeolocateAddress.new!(attrs)
 
       assert metro == %GeolocateAddress.Suggestion.Data.Metro{
-               name: "Название станции",
-               line: "Название линии",
-               distance: 6
+               name: "Бабушкинская",
+               line: "Калужско-Рижская",
+               distance: Decimal.new("1.1")
              }
     end
   end

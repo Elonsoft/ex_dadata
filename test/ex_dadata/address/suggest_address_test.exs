@@ -215,7 +215,7 @@ defmodule ExDadata.Address.SuggestAddressTest do
       assert metro == %SuggestAddress.Suggestion.Data.Metro{
                name: "Название станции",
                line: "Название линии",
-               distance: 6
+               distance: Decimal.new(6)
              }
     end
   end
