@@ -235,7 +235,7 @@ defmodule ExDadata.AddressTest do
 
     test "returns addresses with coordinates on success" do
       client = Client.new(nil, nil, MockGeocodeAddressHTTPAdapter, nil)
-      assert {:ok, %{items: [item]}} = Address.geocode_address(client, [""])
+      assert {:ok, [item]} = Address.geocode_address(client, [""])
 
       assert %{
                source: "москва сухонская 11",
