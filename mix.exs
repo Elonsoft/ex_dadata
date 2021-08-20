@@ -7,6 +7,7 @@ defmodule ExDadata.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
 
       # Docs
@@ -16,6 +17,9 @@ defmodule ExDadata.MixProject do
       docs: docs()
     ]
   end
+
+  defp elixirc_paths(:dev), do: ["lib", "dev"]
+  defp elixirc_paths(_), do: ["lib"]
 
   def application do
     [
