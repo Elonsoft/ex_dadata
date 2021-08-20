@@ -36,7 +36,7 @@ defmodule ExDadata.HTTPBackoffTest do
         case Process.get({self(), :success_on_second}) do
           nil ->
             Process.put({self(), :success_on_second}, :some)
-            {:ok, %Response{status: 403}}
+            {:ok, %Response{status: 429}}
 
           :some ->
             Process.delete({self(), :success_on_second})
@@ -46,7 +46,7 @@ defmodule ExDadata.HTTPBackoffTest do
     end
 
     test "SuccessOnSecondHTTPAdapter works" do
-      assert {:ok, %Response{status: 403}} =
+      assert {:ok, %Response{status: 429}} =
                SuccessOnSecondHTTPAdapter.request(nil, nil, nil, nil, nil, nil)
 
       assert {:ok, %Response{status: 200}} =

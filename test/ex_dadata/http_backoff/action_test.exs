@@ -10,13 +10,13 @@ defmodule ExDadata.HTTPBackoff.ActionTest do
   end
 
   test "returns retry_after when catch rate limits" do
-    resp = %Response{status: 403}
+    resp = %Response{status: 429}
     assert {:retry_after, time} = Action.action(Action.new(), resp)
     assert div(time, 1_000) == 1
   end
 
   test "increases timeout for retries five times and then returns an error" do
-    resp = %Response{status: 403}
+    resp = %Response{status: 429}
     action = Action.new()
     assert {:retry_after, time} = Action.action(action, resp)
     assert div(time, 1_000) == 1

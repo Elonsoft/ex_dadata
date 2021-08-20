@@ -13,13 +13,11 @@ defmodule ExDadata.HTTPBackoff.Action do
     %__MODULE__{count: n + 1}
   end
 
-  # TODO!: Change status and may be add pattern match for the body
-  # to catch the case where we exceeded rate limit.
-  def action(%__MODULE__{count: n}, %Response{status: 403}) when n > 4 do
+  def action(%__MODULE__{count: n}, %Response{status: 429}) when n > 4 do
     :return
   end
 
-  def action(%__MODULE__{count: n}, %Response{status: 403}) do
+  def action(%__MODULE__{count: n}, %Response{status: 429}) do
     {:retry_after, backoff_time(n)}
   end
 
