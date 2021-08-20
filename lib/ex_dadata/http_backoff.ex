@@ -19,9 +19,10 @@ defmodule ExDadata.HTTPBackoff do
     ast =
       quote do
         defmodule unquote(wrapped_module) do
-          def request(method, url, headers, body, opts) do
+          def request(client, method, url, headers, body, opts) do
             unquote(__MODULE__).request(
               unquote(adapter),
+              client,
               method,
               url,
               headers,
@@ -37,14 +38,15 @@ defmodule ExDadata.HTTPBackoff do
     module
   end
 
-  def request(adapter, method, url, headers, body, opts, action) do
-    result = adapter.request(method, url, headers, body, opts)
+  def request(adapter, client, method, url, headers, body, opts, action) do
+    result = adapter.request(client, method, url, headers, body, opts)
 
     with {:ok, response} <- result do
       case Action.action(action, response) do
         {:retry_after, s} ->
           Process.sleep(s)
-          request(adapter, method, url, headers, body, opts, Action.next(action))
+          new_action = Action.next(action)
+          request(adapter, client, method, url, headers, body, opts, new_action)
 
         :return ->
           {:ok, response}

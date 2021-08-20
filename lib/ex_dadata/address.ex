@@ -29,9 +29,9 @@ defmodule ExDadata.Address do
 
   defp do_clean_address(client, data) do
     headers = Client.to_headers(client)
-    adapter = Client.adapter(client)
+    adapter = Client.http_adapter(client)
 
-    case adapter.request(:post, @clean_address_url, headers, data, []) do
+    case adapter.request(client, :post, @clean_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
@@ -65,9 +65,9 @@ defmodule ExDadata.Address do
           {"Content-Type", "application/json"}
         ]
 
-    adapter = Client.adapter(client)
+    adapter = Client.http_adapter(client)
 
-    case adapter.request(:post, @suggest_address_url, headers, data, []) do
+    case adapter.request(client, :post, @suggest_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
@@ -94,9 +94,9 @@ defmodule ExDadata.Address do
 
   defp do_geocode_address(client, data) do
     headers = Client.to_headers(client)
-    adapter = Client.adapter(client)
+    adapter = Client.http_adapter(client)
 
-    case adapter.request(:post, @geocode_address_url, headers, data, []) do
+    case adapter.request(client, :post, @geocode_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
@@ -129,9 +129,9 @@ defmodule ExDadata.Address do
           {"Content-Type", "application/json"}
         ]
 
-    adapter = Client.adapter(client)
+    adapter = Client.http_adapter(client)
 
-    case adapter.request(:get, @geolocate_address_url, headers, data, []) do
+    case adapter.request(client, :get, @geolocate_address_url, headers, data, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error

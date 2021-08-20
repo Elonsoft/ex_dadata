@@ -9,7 +9,7 @@ defmodule ExDadata.HTTPBackoffTest do
     defmodule SomeHTTPAdapter do
       @behaviour HTTPAdapter
 
-      def request(_, url, _, body, _) do
+      def request(_, _, url, _, body, _) do
         send(url, body)
         {:ok, %Response{status: 200}}
       end
@@ -17,22 +17,22 @@ defmodule ExDadata.HTTPBackoffTest do
 
     test "generates module that calls request/5 function" do
       adapter = HTTPBackoff.functor(SomeHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, self(), nil, :sent, nil)
+      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, self(), nil, :sent, nil)
       assert_receive :sent
     end
   end
 
-  describe "request/7" do
+  describe "request/8" do
     defmodule SuccessfulHTTPAdapter do
       @behaviour HTTPAdapter
-      def request(_, _, _, _, _) do
+      def request(_, _, _, _, _, _) do
         {:ok, %Response{status: 200}}
       end
     end
 
     defmodule SuccessOnSecondHTTPAdapter do
       @behaviour HTTPAdapter
-      def request(_, _, _, _, _) do
+      def request(_, _, _, _, _, _) do
         case Process.get({self(), :success_on_second}) do
           nil ->
             Process.put({self(), :success_on_second}, :some)
@@ -47,20 +47,20 @@ defmodule ExDadata.HTTPBackoffTest do
 
     test "SuccessOnSecondHTTPAdapter works" do
       assert {:ok, %Response{status: 403}} =
-               SuccessOnSecondHTTPAdapter.request(nil, nil, nil, nil, nil)
+               SuccessOnSecondHTTPAdapter.request(nil, nil, nil, nil, nil, nil)
 
       assert {:ok, %Response{status: 200}} =
-               SuccessOnSecondHTTPAdapter.request(nil, nil, nil, nil, nil)
+               SuccessOnSecondHTTPAdapter.request(nil, nil, nil, nil, nil, nil)
     end
 
     test "returns on first success" do
       adapter = HTTPBackoff.functor(SuccessfulHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil)
+      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil, nil)
     end
 
     test "returns on second success" do
       adapter = HTTPBackoff.functor(SuccessOnSecondHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil)
+      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil, nil)
     end
   end
 end

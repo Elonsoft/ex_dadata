@@ -32,7 +32,8 @@ Then we can set our configuration in `config.exs` file:
 config :my_app, MyApp.Dadata,
   api_key: "<api_key>",
   secret_key: "<secret_key>",
-  adapter: ExDadata.HTTPoison
+  http_adapter: ExDadata.HTTPoisonHTTPAdapter,
+  json_adapter: Jason
 ```
 
 And then we can use it to make requests to DaData API:

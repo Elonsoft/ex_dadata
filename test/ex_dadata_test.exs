@@ -12,13 +12,14 @@ defmodule ExDadataTest do
       Application.put_env(:ex_dadata, ValidConfig,
         api_key: "api_key",
         secret_key: "secret_key",
-        adapter: ExDadata.HTTPoison
+        http_adapter: ExDadata.HTTPoison,
+        json_adapter: nil
       )
 
       assert client = ValidConfig.client()
       assert client.api_key == "api_key"
       assert client.secret_key == "secret_key"
-      assert client.adapter == ExDadata.HTTPoison.Backoffed
+      assert client.http_adapter == ExDadata.HTTPoison.Backoffed
     end
 
     test "raises an error in case :otp_app is not provided in the wrapper module" do

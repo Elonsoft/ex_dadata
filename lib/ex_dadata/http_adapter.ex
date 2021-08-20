@@ -3,6 +3,8 @@ defmodule ExDadata.HTTPAdapter do
   An interface to provide an HTTP client.
   """
 
+  alias ExDadata.Client
+
   @typedoc """
   An http method.
   """
@@ -23,9 +25,9 @@ defmodule ExDadata.HTTPAdapter do
   @type header :: {String.t(), String.t()}
 
   @typedoc """
-  JSON-body for the request, provided as a map; may contain atoms.
+    JSON-body for the request, provided as json-encodable data.
   """
-  @type body :: map
+  @type body :: term()
 
   @typedoc """
   Opts provided for specific adapters.
@@ -45,9 +47,9 @@ defmodule ExDadata.HTTPAdapter do
     @type header :: {String.t(), String.t()}
 
     @typedoc """
-    JSON-body for the request. Provided as a map. May contain atoms.
+    JSON-body for the request, provided as json-encodable data.
     """
-    @type body :: map
+    @type body :: term()
 
     @typedoc """
     The response struct on which the main logic depends.
@@ -62,6 +64,6 @@ defmodule ExDadata.HTTPAdapter do
   @doc """
   Provides an ability to do an arbitrary request with json data.
   """
-  @callback request(method, url, [header], body, opts) ::
+  @callback request(Client.t(), method, url, [header], body, opts) ::
               {:ok, Response.t()} | {:error, term}
 end

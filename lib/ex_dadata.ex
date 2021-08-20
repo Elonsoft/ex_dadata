@@ -15,7 +15,8 @@ defmodule ExDadata do
       config :my_app, MyApp.Dadata,
         api_key: "<api_key>",
         secret_key: "<secret_key>",
-        adapter: ExDadata.HTTPoison
+        http_adapter: ExDadata.HTTPoisonHTTPAdapter,
+        json_adapter: Jason
 
   And then we can use it to make requests to DaData API:
 
@@ -39,8 +40,9 @@ defmodule ExDadata do
         config = Application.get_env(unquote(otp_app), __MODULE__)
         api_key = fetch_config_opt!(config, :api_key)
         secret_key = fetch_config_opt!(config, :secret_key)
-        adapter = fetch_config_opt!(config, :adapter)
-        ExDadata.Client.new(api_key, secret_key, adapter)
+        http_adapter = fetch_config_opt!(config, :http_adapter)
+        json_adapter = fetch_config_opt!(config, :json_adapter)
+        ExDadata.Client.new(api_key, secret_key, http_adapter, json_adapter)
       end
 
       defp fetch_config_opt!(config, key) do
