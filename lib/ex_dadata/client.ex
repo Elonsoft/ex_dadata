@@ -42,7 +42,7 @@ defmodule ExDadata.Client do
   @spec to_headers(t) :: [{String.t(), String.t()}]
   def to_headers(%__MODULE__{api_key: api_key, secret_key: secret_key}) do
     [
-      {"Authorization", "Bearer #{api_key}"},
+      {"Authorization", "Token #{api_key}"},
       {"X-Secret", "#{secret_key}"}
     ]
   end
