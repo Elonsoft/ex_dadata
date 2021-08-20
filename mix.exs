@@ -28,7 +28,9 @@ defmodule ExDadata.MixProject do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ecto, ">= 3.0.0"},
-      {:ex_doc, "~> 0.25", only: [:dev], runtime: false}
+      {:ex_doc, "~> 0.25", only: [:dev], runtime: false},
+      {:httpoison, "~> 1.8", optional: true},
+      {:jason, "~> 1.2", optional: true}
     ]
   end
 
