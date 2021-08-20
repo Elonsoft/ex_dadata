@@ -101,11 +101,21 @@ defmodule ExDadata.Address do
         ]
 
     adapter = Client.http_adapter(client)
+    url = compose_geolocate_url(data)
 
-    case adapter.request(client, :get, @geolocate_address_url, headers, data, []) do
+    case adapter.request(client, :get, url, headers, %{}, []) do
       {:ok, %Response{status: 200, body: response}} -> {:ok, response}
       {:ok, resp} -> {:error, resp}
       {:error, _} = error -> error
     end
+  end
+
+  defp compose_geolocate_url(data) do
+    uri = %URI{
+      URI.parse(@geolocate_address_url)
+      | query: URI.encode_query(data)
+    }
+
+    URI.to_string(uri)
   end
 end

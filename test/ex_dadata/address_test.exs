@@ -260,7 +260,7 @@ defmodule ExDadata.AddressTest do
 
       alias ExDadata.HTTPAdapter.Response
 
-      @url "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address"
+      @url "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address?lat=55.601983&lon=37.359486"
 
       def request(_, :get, @url, _, _, _) do
         body = %{
@@ -368,7 +368,7 @@ defmodule ExDadata.AddressTest do
       client = Client.new(nil, nil, MockGeolocateAddressHTTPAdapter, nil)
 
       assert {:ok, %{suggestions: [suggestion]}} =
-               Address.geolocate_address(client, %{query: %{lat: 55.601983, lon: 37.359486}})
+               Address.geolocate_address(client, %{lat: 55.601983, lon: 37.359486})
 
       assert %{
                value: "г Москва, ул Хабаровская",
