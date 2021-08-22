@@ -1,5 +1,8 @@
 # ExDadata
 
+![](https://github.com/Elonsoft/ex_dadata/workflows/test/badge.svg)
+![](https://github.com/Elonsoft/ex_dadata/workflows/lint/badge.svg)
+
 `ExDadata` provides a wrapper for [DaData API](https://dadata.ru/api/).
 
 ## Installation
