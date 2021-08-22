@@ -14,7 +14,11 @@ defmodule ExDadata.MixProject do
       name: "ExDadata",
       source_url: "https://github.com/Elonsoft/ex_dadata",
       homepage_url: "https://dadata.ru",
-      docs: docs()
+      docs: docs(),
+
+      # Hex
+      description: description(),
+      package: package()
     ]
   end
 
@@ -49,6 +53,20 @@ defmodule ExDadata.MixProject do
           ExDadata.HTTPAdapter.Response
         ]
       ]
+    ]
+  end
+
+  defp description do
+    """
+    DaData.ru API wrapper library for Elixir
+    """
+  end
+
+  defp package do
+    [
+      links: %{"GitHub" => "https://github.com/Elonsoft/ex_dadata"},
+      licenses: ["MIT"],
+      files: ~w(.formatter.exs mix.exs README.md lib)
     ]
   end
 end
