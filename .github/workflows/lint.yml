@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1.0.0
+        uses: actions/checkout@v2
       - name: Setup Elixir
-        uses: actions/setup-elixir@v1.2.0
+        uses: erlef/setup-beam@v1
         with:
-          otp-version: 21.x
-          elixir-version: 1.9.1
+          otp-version: 24.x
+          elixir-version: 1.12.0
       - name: Fetch dependencies
         run: mix deps.get
       - name: Check format
