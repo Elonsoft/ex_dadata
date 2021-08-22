@@ -210,7 +210,8 @@ defmodule ExDadata.Address.SuggestAddressTest do
         ]
       }
 
-      assert %{suggestions: [%{data: %{metro: [metro]}}]} = SuggestAddress.new!(attrs)
+      assert %{suggestions: [%{data: %{metro: [metro]}}]} =
+               SuggestAddress.new!(attrs)
 
       assert metro == %SuggestAddress.Suggestion.Data.Metro{
                name: "Название станции",

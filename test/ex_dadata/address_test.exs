@@ -211,7 +211,9 @@ defmodule ExDadata.AddressTest do
 
       alias ExDadata.HTTPAdapter.Response
 
-      def request(_, :post, "https://cleaner.dadata.ru/api/v1/clean/address", _, _, _) do
+      @mock_url "https://cleaner.dadata.ru/api/v1/clean/address"
+
+      def request(_, :post, @mock_url, _, _, _) do
         body = [
           %{
             "source" => "москва сухонская 11",
@@ -368,7 +370,10 @@ defmodule ExDadata.AddressTest do
       client = Client.new(nil, nil, MockGeolocateAddressHTTPAdapter, nil)
 
       assert {:ok, %{suggestions: [suggestion]}} =
-               Address.geolocate_address(client, %{lat: 55.601983, lon: 37.359486})
+               Address.geolocate_address(client, %{
+                 lat: 55.601983,
+                 lon: 37.359486
+               })
 
       assert %{
                value: "г Москва, ул Хабаровская",

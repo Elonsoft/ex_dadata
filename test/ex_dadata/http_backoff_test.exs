@@ -17,7 +17,10 @@ defmodule ExDadata.HTTPBackoffTest do
 
     test "generates module that calls request/5 function" do
       adapter = HTTPBackoff.functor(SomeHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, self(), nil, :sent, nil)
+
+      assert {:ok, %Response{status: 200}} =
+               adapter.request(nil, nil, self(), nil, :sent, nil)
+
       assert_receive :sent
     end
   end
@@ -55,12 +58,16 @@ defmodule ExDadata.HTTPBackoffTest do
 
     test "returns on first success" do
       adapter = HTTPBackoff.functor(SuccessfulHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil, nil)
+
+      assert {:ok, %Response{status: 200}} =
+               adapter.request(nil, nil, nil, nil, nil, nil)
     end
 
     test "returns on second success" do
       adapter = HTTPBackoff.functor(SuccessOnSecondHTTPAdapter)
-      assert {:ok, %Response{status: 200}} = adapter.request(nil, nil, nil, nil, nil, nil)
+
+      assert {:ok, %Response{status: 200}} =
+               adapter.request(nil, nil, nil, nil, nil, nil)
     end
   end
 end

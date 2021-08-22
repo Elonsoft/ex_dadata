@@ -210,7 +210,8 @@ defmodule ExDadata.Address.GeolocateAddressTest do
         ]
       }
 
-      assert %{suggestions: [%{data: %{metro: [metro]}}]} = GeolocateAddress.new!(attrs)
+      assert %{suggestions: [%{data: %{metro: [metro]}}]} =
+               GeolocateAddress.new!(attrs)
 
       assert metro == %GeolocateAddress.Suggestion.Data.Metro{
                name: "Бабушкинская",
