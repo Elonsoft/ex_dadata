@@ -4,6 +4,7 @@ defmodule ExDadata.Address.SuggestAddress do
   use Ecto.Schema
 
   alias __MODULE__.Suggestion
+  alias __MODULE__.Suggestion.Data.Metro
   alias Ecto.Changeset
 
   @primary_key false
@@ -20,7 +21,7 @@ defmodule ExDadata.Address.SuggestAddress do
           %{suggestion | data: %{data | metro: []}}
 
         %{data: %{metro: list} = data} = suggestion when is_list(list) ->
-          metro = Suggestion.Data.Metro.cast_list!(list)
+          metro = Metro.cast_list!(list)
           %{suggestion | data: %{data | metro: metro}}
       end)
 

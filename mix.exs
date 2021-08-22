@@ -30,6 +30,7 @@ defmodule ExDadata.MixProject do
 
   defp deps do
     [
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ecto, ">= 3.0.0"},
       {:ex_doc, "~> 0.25", only: [:dev], runtime: false},
