@@ -6,9 +6,9 @@ defmodule ExDadata.NoConfigError do
   defexception [:key, :otp_app, :module]
 
   def exception(opts) do
-    {key, opts} = Keyword.pop!(opts, :key)
-    {otp_app, opts} = Keyword.pop!(opts, :otp_app)
-    {module, _opts} = Keyword.pop!(opts, :module)
+    {key, opts} = Keyword.pop(opts, :key)
+    {otp_app, opts} = Keyword.pop(opts, :otp_app)
+    {module, _opts} = Keyword.pop(opts, :module)
     %__MODULE__{key: key, otp_app: otp_app, module: module}
   end
 
